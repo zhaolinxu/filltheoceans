@@ -1,5 +1,3 @@
-"use strict";
-
 var msie;
 msie = window.document.documentMode;
 
@@ -10,7 +8,7 @@ if (typeof(msie)=="number"){
 }
 
 var Game = {
-		version:"0.1.11",
+		version:"0.1.14",
 		interval: 50,     
 		decimals: 0,      
 		
@@ -123,6 +121,12 @@ var Game = {
 		crazyscientistsboost: 0,
 		alienDrainOffline: 0,
 		firstwater:0,
+		oldperctxt:0,
+		oldpercbar:0,
+		cpsDisplayColor:0,
+		weatherstationLevel:0,
+		upgradeWeatherstationDivActive: 0,
+		upgradeWeatherstationDivHover: 0,
 		
 		// Minigame poseidon
 		poseidonStarted: 0,
@@ -290,6 +294,10 @@ var Game = {
 		prayerSelectDivCloseButton: undefined,
 		spindropOptionButton: undefined,
 		mtneewprogress: undefined,
+		weatherstationImage: undefined,
+		weatherstationDiv: undefined,
+		weatherstationDivCloseButton: undefined,
+		upgradeweatherstationDiv: undefined,
 		
 		handle: undefined,
 		handleother: undefined,
@@ -508,6 +516,10 @@ var Game = {
 			this.prayerSelectDivCloseButton = $('#prayerSelectDivCloseButton');
 			this.spindropOptionButton = $('#spindropOption');
 			this.mtneexprogress = $('#progressbarcontainermtnexpl');
+			this.weatherstationImage = $('#weatherstationImage');
+			this.weatherstationDiv = $('#weatherstationDiv');
+			this.weatherstationDivCloseButton = $('#weatherstationDivCloseButton');
+			this.upgradeweatherstationDiv = $('#upgradeWeatherstationDiv');
 			
 			// Minigame poseidon
 			this.templeImage = $('#templeImage');
@@ -596,7 +608,7 @@ var Game = {
 								$('#arrowsdiv26'),$('#arrowsdiv27'),$('#arrowsdiv28'),$('#arrowsdiv29'),
 								$('#arrowsdiv30'),$('#arrowsdiv31'),$('#arrowsdiv32'),$('#arrowsdiv33'),
 								$('#arrowsdiv34'),$('#arrowsdiv35'),$('#arrowsdiv36'),$('#arrowsdiv37'),
-								$('#arrowsdiv38'),$('#arrowsdiv39'),this.arrowsArray40];
+								$('#arrowsdiv38'),$('#arrowsdiv39'),this.arrowsArray40, $('#arrowsdiv41')];
 			
 			
 			this.dragstarposx = this.knowhowDrag.position().left;
@@ -1091,6 +1103,14 @@ var Game = {
 				}
 			});
 			
+			this.weatherstationImage.click(function(){
+				self.weatherstationDiv.toggle("slow");
+			});
+			
+			this.weatherstationDivCloseButton.click(function(){
+				self.weatherstationDiv.toggle("slow");
+			});
+			
 			// Minigame poseidon
 			this.poseidonImage.click(function(){
 				if(self.poseidonStarted==1){
@@ -1408,6 +1428,7 @@ var Game = {
 			// End minigame poseidon
 			this.prayerSelectDiv.draggable();
 			this.poseidonSacrifice.draggable();
+			this.weatherstationDiv.draggable();
 			
 			this.prayerSelectDivCloseButton.click(function(){
 				self.prayerSelectDiv.hide("slow");
@@ -1421,6 +1442,10 @@ var Game = {
 				self._sacrificeClick();
 			});
 			
+			this.upgradeweatherstationDiv.click(function(){
+				self._upgradeWeatherstationClick();
+			});
+			
 			this.poseidonSacrifice.on({
 							mouseenter: function () {
 								self.sacrificeDivHover=1;
@@ -1432,6 +1457,21 @@ var Game = {
 								self.sacrificeDivHover=0;
 								if(self.sacrificeDivActive==1){ 
 									self.sacrificeDiv.css({'background-color':'#005588', '-moz-box-shadow':'inset 0 0 20px #00c0ff', '-webkit-box-shadow':'inset 0 0 20px #00c0ff', 'box-shadow':'inset 0 0 20px #00c0ff'});
+								}
+							}
+						}, ".hoverSel");
+			
+			this.weatherstationDiv.on({
+							mouseenter: function () {
+								self.upgradeWeatherstationDivHover=1;
+								if(self.upgradeWeatherstationDivActive==1){ 
+									self.upgradeweatherstationDiv.css({'background-color':'#01a2d7', '-moz-box-shadow':'inset 0 0 20px #55ffff', '-webkit-box-shadow':'inset 0 0 20px #55ffff', 'box-shadow':'inset 0 0 20px #55ffff'});
+								}
+							},
+							mouseleave: function () { 
+								self.upgradeWeatherstationDivHover=0;
+								if(self.upgradeWeatherstationDivActive==1){ 
+									self.upgradeweatherstationDiv.css({'background-color':'#005588', '-moz-box-shadow':'inset 0 0 20px #00c0ff', '-webkit-box-shadow':'inset 0 0 20px #00c0ff', 'box-shadow':'inset 0 0 20px #00c0ff'});
 								}
 							}
 						}, ".hoverSel");
@@ -2137,6 +2177,70 @@ var Game = {
 			this.poseidonSacrifice.toggle("slow");
 		},
 		
+		_upgradeWeatherstationClick: function(){
+			var self = this;
+			if (self.upgradeWeatherstationDivActive==1){
+				if (self.weatherstationLevel==1){
+					if (self.drops_in_bank>=1000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 1000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				} else if (self.weatherstationLevel==2){
+					if (self.drops_in_bank>=100000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 100000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				}  else if (self.weatherstationLevel==3){
+					if (self.drops_in_bank>=1000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 1000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				} else if (self.weatherstationLevel==4){
+					if (self.drops_in_bank>=100000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 100000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				} else if (self.weatherstationLevel==5){
+					if (self.drops_in_bank>=1000000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 1000000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				}  else if (self.weatherstationLevel==6){
+					if (self.drops_in_bank>=100000000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 100000000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				}  else if (self.weatherstationLevel==7){
+					if (self.drops_in_bank>=1000000000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 1000000000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				}  else if (self.weatherstationLevel==8){
+					if (self.drops_in_bank>=100000000000000000000000){
+						self.weatherstationLevel++;
+						self._changeWeatherstationText();
+						self.drops_in_bank = self.drops_in_bank - 100000000000000000000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
+						self.upgradeWeatherstationDivActive=0;
+					}
+				}
+				self._setWeatherstationDeactive();
+			}
+			
+		},
 		
 		_sacrificeClick: function(){
 			var self = this;
@@ -2145,7 +2249,7 @@ var Game = {
 					if (self.drops_in_bank>=1000000){
 						self.sacrificeLevel++;
 						self._changeSacrificeText(self.sacrificeLevel);
-						self.drops_in_bank = self.drops_in_bank - 1000000;
+						self.drops_in_bank = self.drops_in_bank - 1000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
 						self.sacrificeDivActive=0;
 					}
 				}
@@ -2153,7 +2257,7 @@ var Game = {
 					if (self.drops_in_bank>=2000000){
 						self.sacrificeLevel++;
 						self._changeSacrificeText(self.sacrificeLevel);
-						self.drops_in_bank = self.drops_in_bank - 2000000;
+						self.drops_in_bank = self.drops_in_bank - 2000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
 						self.sacrificeDivActive=0;
 					}
 				}
@@ -2161,7 +2265,7 @@ var Game = {
 					if (self.drops_in_bank>=4000000){
 						self.sacrificeLevel++;
 						self._changeSacrificeText(self.sacrificeLevel);
-						self.drops_in_bank = self.drops_in_bank - 4000000;
+						self.drops_in_bank = self.drops_in_bank - 4000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
 						self.sacrificeDivActive=0;
 					}
 				}
@@ -2169,7 +2273,7 @@ var Game = {
 					if (self.drops_in_bank>=8000000){
 						self.sacrificeLevel++;
 						self._changeSacrificeText(self.sacrificeLevel);
-						self.drops_in_bank = self.drops_in_bank - 8000000;
+						self.drops_in_bank = self.drops_in_bank - 8000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
 						self.sacrificeDivActive=0;
 					}
 				}
@@ -2177,7 +2281,7 @@ var Game = {
 					if (self.drops_in_bank>=16000000){
 						self.sacrificeLevel++;
 						self._changeSacrificeText(self.sacrificeLevel);
-						self.drops_in_bank = self.drops_in_bank - 16000000;
+						self.drops_in_bank = self.drops_in_bank - 16000000; if(self.drops_in_bank<0){self.drops_in_bank=0;}
 						self.sacrificeDivActive=0;
 					}
 				}
@@ -2386,6 +2490,93 @@ var Game = {
 				}
 			},
 		
+		_setWeatherstationActive:function(){
+			var self = this; 
+			self.upgradeWeatherstationDivActive=1;
+			if (self.upgradeWeatherstationDivHover==0){
+				self.upgradeweatherstationDiv.css({'background-color':'#005588', '-moz-box-shadow':'inset 0 0 20px #00c0ff', '-webkit-box-shadow':'inset 0 0 20px #00c0ff', 'box-shadow':'inset 0 0 20px #00c0ff'});
+			}
+		},
+		
+		_setWeatherstationDeactive:function(){
+			var self = this; 
+			self.upgradeweatherstationDiv.css({'background-color':'#002558', '-moz-box-shadow':'inset 0 0 20px #0090cf', '-webkit-box-shadow':'inset 0 0 20px #0090cf', 'box-shadow':'inset 0 0 20px #0090cf'});
+			self.upgradeWeatherstationDivActive=0;
+		},
+		
+		_weatherstationCheck:function(){
+			var self = this;
+			if (self.upgradeWeatherstationDivActive==0){
+				if (self.weatherstationLevel==1){
+					if (self.drops_in_bank >= 1000000000000){
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==2){
+					if (self.drops_in_bank >= 100000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==3){
+					if (self.drops_in_bank >= 1000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==4){
+					if (self.drops_in_bank >= 100000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==5){
+					if (self.drops_in_bank >= 1000000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==6){
+					if (self.drops_in_bank >= 100000000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==7){
+					if (self.drops_in_bank >= 1000000000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				} else if (self.weatherstationLevel==8){
+					if (self.drops_in_bank >= 100000000000000000000000){ 
+						self._setWeatherstationActive();
+					}
+				}
+			} else {
+				if (self.weatherstationLevel==1){
+					if (self.drops_in_bank < 1000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==2){
+					if (self.drops_in_bank < 100000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==3){
+					if (self.drops_in_bank < 1000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==4){
+					if (self.drops_in_bank < 100000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==5){
+					if (self.drops_in_bank < 1000000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==6){
+					if (self.drops_in_bank < 100000000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==7){
+					if (self.drops_in_bank < 1000000000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} else if (self.weatherstationLevel==8){
+					if (self.drops_in_bank < 100000000000000000000000){ 
+						self._setWeatherstationDeactive();
+					} 
+				} 
+			}
+		},
+		
 		_setSacrificeActive:function(){
 			var self = this;
 			self.sacrificeDivActive=1;
@@ -2563,6 +2754,31 @@ var Game = {
 			}
 		},
 		
+		_changeWeatherstationText: function(){
+			var self = this;
+			if (self.weatherstationLevel==0){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />1 trillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 20% of the clouds for you. After you buy this upgrade the weather station will click on 30% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==1){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />1 trillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 20% of the clouds for you. After you buy this upgrade the weather station will click on 30% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==2){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />100 trillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 30% of the clouds for you. After you buy this upgrade the weather station will click on 40% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==3){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />1 quadrillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 40% of the clouds for you. After you buy this upgrade the weather station will click on 50% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==4){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />100 quadrillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 50% of the clouds for you. After you buy this upgrade the weather station will click on 60% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==5){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />1 quintillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 60% of the clouds for you. After you buy this upgrade the weather station will click on 70% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==6){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />100 quintillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 70% of the clouds for you. After you buy this upgrade the weather station will click on 80% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==7){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />1 sextillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 80% of the clouds for you. After you buy this upgrade the weather station will click on 90% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==8){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Upgrade<br />100 sextillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 90% of the clouds for you. After you buy this upgrade the weather station will click on 100% of the clouds for you.</p>');
+			} else if (self.weatherstationLevel==9){
+				self.upgradeweatherstationDiv.html('<p class="sacrificetext">Fully upgraded</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 100% of the clouds for you.</p>');
+			} 
+		},
+		
 		_changeSacrificeText: function(level){
 			var self = this;
 			if (self.sacrificeLevel==0){
@@ -2611,6 +2827,8 @@ var Game = {
 		_getPopPos: function(type){
 			var result = [];
 			var w = window.innerWidth; 
+			
+			
 			if(type=='left'){
 				if (w<1200){
 					result = ['1%', 'auto']; 
@@ -2930,6 +3148,7 @@ var Game = {
 				nextcl = nextcl * 0.90;
 			}
 			window.setTimeout(function(){self.cloudjclicked =0;self._showcloud();}, nextcl);
+			
 
 			var randOutcome = Math.floor((Math.random() * 100) + 1);
 			
@@ -3010,27 +3229,31 @@ var Game = {
 		_cloudGivesDrops: function(){
 			var dib = Math.round(this.drops_in_bank*15/100);
 			var dps = this.cps_cur * 900;
-			console.log(Beautify(dib) +" / " + Beautify(dps));
+		//	console.log(Beautify(dib) +" / " + Beautify(dps));
 			if (dib<dps){
 				if (Game.prayers[11].selected==1){
 					dib = Math.round(dib * 1.2);
 					
 				}
-				this.total_drops_produced += dib;
-				this.total_ever += dib; 
-				this.drops_in_bank += dib;
-				var txt = "You got lucky with rain and got "+ Beautify(dib) + " extra drops!";  
-				this._makeNotice("rain", "Rain!",txt,0,0,0);
+				if(dib>0){
+					this.total_drops_produced += dib;
+					this.total_ever += dib; 
+					this.drops_in_bank += dib; if(this.drops_in_bank<0){this.drops_in_bank=0;}
+					var txt = "You got lucky with rain and got "+ Beautify(dib) + " extra drops!";  
+					this._makeNotice("rain", "Rain!",txt,0,0,0);
+				}
 			}else{
 				if (Game.prayers[11].selected==1){
 					dps = Math.round(dps * 1.2);
 					
 				}
-				this.total_drops_produced += dps;
-				this.total_ever += dps; 
-				this.drops_in_bank += dps;
-				var txt = "You got lucky with rain and got "+ Beautify(dps) + " extra drops!";  
-				this._makeNotice("rain", "Rain!",txt,0,0,0);
+				if (dps>0){
+					this.total_drops_produced += dps;
+					this.total_ever += dps; 
+					this.drops_in_bank += dps; if(this.drops_in_bank<0){this.drops_in_bank=0;}
+					var txt = "You got lucky with rain and got "+ Beautify(dps) + " extra drops!";  
+					this._makeNotice("rain", "Rain!",txt,0,0,0);
+				}
 			}
 		},
 		
@@ -3162,6 +3385,9 @@ var Game = {
 							clearInterval(interv);
 							if (self.cloudjclicked==0){
 								window.setTimeout(function(){self._hidecloud();}, self.cloudduration);
+								if(self.weatherstationLevel>0){
+									window.setTimeout(function(){self._autoclickcloud();}, 2000);
+								}
 							}else {
 								self.cloud.css({'display':'none'});
 								self.cloudjclicked=0;
@@ -3181,6 +3407,53 @@ var Game = {
 			
 			
 			
+		},
+		
+		_autoclickcloud: function(){
+		var self = this;
+			if(this.weatherstationLevel==1){
+				var autoclick = randomIntFromInterval(1,5);
+				if(autoclick==1){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==2){
+				var autoclick = randomIntFromInterval(1,3);
+				if(autoclick==1){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==3){
+				var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<5){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==4){
+			var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<6){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==5){
+			var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<7){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==6){
+				var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<8){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==7){
+			var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<9){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==8){
+			var autoclick = randomIntFromInterval(1,10);
+				if(autoclick<10){
+					if (self.cloudvisible == 1){self.cloud.click();}
+				}
+			}else if(this.weatherstationLevel==9){
+					if (self.cloudvisible == 1){self.cloud.click();}
+			}
 		},
 		
 		_hidecloud: function(){
@@ -3207,6 +3480,7 @@ var Game = {
 									nextcl = nextcl * 0.90;
 								}
 								window.setTimeout(function(){self._showcloud();}, nextcl);
+								
 							}
 					}else{
 						self.cloud.css({'-moz-opacity': (100-i)/100, 'opacity':(100-i)/100, 'filter': 'alpha(opacity='+(100-i)+')'});//'display':'block', 
@@ -3381,6 +3655,8 @@ var Game = {
 			savetxt += this.spinningbgoption;
 			savetxt = savetxt + "|";
 			savetxt += this.oceanLog;
+			savetxt = savetxt + "|";
+			savetxt += this.weatherstationLevel;
 			savetxt += "|end";
 			return savetxt;
 		},
@@ -3459,7 +3735,7 @@ var Game = {
 								this._loadv013(la);
 								this._loadend();
 							}
-						}else if ((la[0]=="0.1.6")||(la[0]=="0.1.7")||(la[0]=="0.1.8")||(la[0]=="0.1.9")||(la[0]=="0.1.10")||(la[0]=="0.1.11")){
+						}else if ((la[0]=="0.1.6")||(la[0]=="0.1.7")||(la[0]=="0.1.8")||(la[0]=="0.1.9")||(la[0]=="0.1.10")||(la[0]=="0.1.11")||(la[0]=="0.1.12")){
 							if (la.length!=72){
 								alert("The savefile is not a correct file or is corrupt.");
 								this.intro.fadeIn("fast");
@@ -3469,6 +3745,19 @@ var Game = {
 								this._loadv011(la);
 								this._loadv012(la);
 								this._loadv013(la);
+								this._loadend();
+							}
+						}else if ((la[0]=="0.1.13")||(la[0]=="0.1.14"))){
+							if (la.length!=73){
+								alert("The savefile is not a correct file or is corrupt.");
+								this.intro.fadeIn("fast");
+							}else {
+								this.loadedgame = 1;
+								this._loadv010after015(la);
+								this._loadv011(la);
+								this._loadv012(la);
+								this._loadv013(la);
+								this._loadv0113(la);
 								this._loadend();
 							}
 						}else {
@@ -3495,6 +3784,7 @@ var Game = {
 
 			var nextcl = this.cloudstart + randomnum;
 			window.setTimeout(function(){_self._showcloud();}, nextcl);
+			
 			$('#loading').fadeOut("fast");
 		},
 		
@@ -3682,12 +3972,14 @@ var Game = {
 					else if (this.sort=="alientech"){
 						_self.alientechStrength++;
 						$.each(_self.upgrades, function(i, upgrade) {
-							if(upgrade.sort="alientech"){console.log('active');
+							if((upgrade.sort="alientech")||(upgrade.sort="alientech")){
 								var torepl = (_self.alientechStrength-1)+"%";
 								var replw = _self.alientechStrength+"%";
 								upgrade.description = upgrade.description.replace(torepl, replw);
 							}
 						});
+					}else if(this.sort=="weatherstation"){
+						_self.weatherstationImage.show();
 					}
 				}
 			});
@@ -4030,12 +4322,14 @@ var Game = {
 					else if (this.sort=="alientech"){
 						_self.alientechStrength++;
 						$.each(_self.upgrades, function(i, upgrade) {
-							if(upgrade.sort=="alientech"){
+							if((upgrade.sort=="alientech")||(upgrade.sort=="alientechb")){
 								var torepl = (_self.alientechStrength-1)+"%";
 								var replw = _self.alientechStrength+"%";
 								upgrade.description = upgrade.description.replace(torepl, replw);
 							}
 						});
+					}else if(this.sort=="weatherstation"){
+						_self.weatherstationImage.show();
 					}
 				}
 			});
@@ -4276,6 +4570,11 @@ var Game = {
 			this.oceanLog = parseFloat(la[70]);
 		},
 		
+		_loadv0113:function(la){
+			this.weatherstationLevel = parseFloat(la[71]);
+			this._changeWeatherstationText();
+		},
+		
 		_loadend:function(){
 			this.dropsInOcean.text(Beautify(this.drops_in_ocean.toFixed(this.decimals),0));
 			var perc = (this.drops_in_ocean / this.max_drops_in_ocean)*100;
@@ -4396,12 +4695,13 @@ var Game = {
 					littledropDiv.remove();
 				});
 			}
-			this.handmade_drops = this.handmade_drops + this.click_num_tot;
-			this.drops_in_bank = this.drops_in_bank + this.click_num_tot;
-			this.total_drops_produced = this.total_drops_produced + this.click_num_tot;
+			if(this.click_num_tot>0){
+				this.handmade_drops = this.handmade_drops + this.click_num_tot;
+				this.drops_in_bank = this.drops_in_bank + this.click_num_tot; if(this.drops_in_bank<0){this.drops_in_bank=0;}
+				this.total_drops_produced = this.total_drops_produced + this.click_num_tot;
 			
-			this.total_ever += this.click_num_tot; 
-			
+				this.total_ever += this.click_num_tot; 
+			}
 		},
 		
 		_backgroundDrop: function(){
@@ -4432,9 +4732,9 @@ var Game = {
 		
 		_oceanClickGo: function(percd) {
 			this.alertNot.fadeOut("fast");
-			if (this.drops_in_bank>0){
+			if (this.drops_in_bank>0){ if (percd<=100){
 				this.drops_in_ocean = this.drops_in_ocean + (this.drops_in_bank/100*percd);
-				this.drops_in_bank = this.drops_in_bank - (this.drops_in_bank/100*percd);
+				this.drops_in_bank = this.drops_in_bank - (this.drops_in_bank/100*percd); if(this.drops_in_bank<0){this.drops_in_bank=0;}
 				var perc = (this.drops_in_ocean / this.max_drops_in_ocean)*100;
 				this.oceanPerc = Math.floor(perc); 
 				this.dropsInOcean.text(Beautify(this.drops_in_ocean.toFixed(this.decimals),0));
@@ -4445,12 +4745,14 @@ var Game = {
 				var csstop = 100-percbar+'%';
 				var cssheight = percbar + '%';
 				this.progressBar.css({'top':csstop, 'height':cssheight});
+				
 				if (perc>=25){
 					this._startsun();
 					this.sunactive=1;
 				} else {
 					this.sunactive=0;
 				}
+			}
 			}
 		},
 		
@@ -4495,7 +4797,7 @@ var Game = {
 		},
 		
 		
-		_showsun:function(){
+		_showsun:function(){ 
 			
 			var self = this;
 			if (this.sunactive==1){
@@ -4549,6 +4851,8 @@ var Game = {
 								var randomnum = Math.floor((Math.random() * max) + 1);
 								var nextsun = randomnum + self.sunstart;
 								window.setTimeout(function(){self._showsun();}, nextsun);
+								self.sunclick=0;
+								self.sunclicks.text(self.sunclick);
 							}
 					}else{
 						self.sun.css({'display':'block', '-moz-opacity': (100-i)/100, 'opacity':(100-i)/100, 'filter': 'alpha(opacity='+(100-i)+')'});
@@ -4641,8 +4945,12 @@ var Game = {
 			var exppercstr = expperc.toString();
 			this.experiencePerc = parseFloat(exppercstr.substring(2,4)+'.'+exppercstr.substring(4,6));
 			var perctxt = this.experiencePerc + '%';
-			this.experienceProgress.css({'width':perctxt});
+			if(perctxt!=this.oldperctxt){
+				this.experienceProgress.css({'width':perctxt});
+				this.oldperctxt = perctxt;
+			}
 			this.experienceNum.text(this.experience);
+			
 			
 			if ((this.sunvisible==1)&&(this.drops_in_ocean>(this.sunloss/1000*diff))){
 				this.drops_in_ocean = this.drops_in_ocean - (this.sunloss/1000*diff);
@@ -4651,10 +4959,12 @@ var Game = {
 				this.percentageDropsInOcean.text(perc.toFixed(15));
 				this.oceanLog = this._getOceanLog(this.drops_in_ocean);
 				var percbar = this.oceanLog;
-				
-				var csstop = 100-percbar+'%';
-				var cssheight = percbar + '%';
-				this.progressBar.css({'top':csstop, 'height':cssheight});
+				if(percbar!=this.oldpercbar){
+					var csstop = 100-percbar+'%';
+					var cssheight = percbar + '%';
+					this.progressBar.css({'top':csstop, 'height':cssheight});
+					this.oldpercbar=percbar;
+				}
 			}
 			
 				var wheight = this.waves.height();
@@ -4670,18 +4980,29 @@ var Game = {
 					this.outerWaves.animate({top: hpos}, 3000, 'swing', function(){self.wavesanimation=0;});
 				}
 				
-
 						
 				if (this.alienDrain==0){
-					this.cpsDisplay.css({'color':'#ffffff'});
+					if (this.cpsDisplayColor==1){
+						//this.cpsDisplay.css({'color':'#ffffff'});
+						this.cpsDisplay.removeClass("cpsred");
+						this.cpsDisplay.addClass("cpswhite");
+						
+						this.cpsDisplayColor=0;
+					}
 					this.cpsDisplay.text(Beautify(this.cps_cur.toFixed(2)));
 				}
 				else {
-					this.cpsDisplay.css({'color':'red'});
+					if (this.cpsDisplayColor==0){
+						//this.cpsDisplay.css({'color':'red'});
+						this.cpsDisplay.removeClass("cpswhite");
+						this.cpsDisplay.addClass("cpsred");
+						
+						this.cpsDisplayColor=1;
+					}
 					var percDrain = this.alienNumber*this.alienDrainPerc;
-					var cpsToDisplay = this.cps_cur - (this.cps_cur*percDrain/100);
-					var txt = Beautify(cpsToDisplay.toFixed(0)) + " drained by " + Math.round(percDrain) + "%";
-					this.cpsDisplay.text(txt);
+						var cpsToDisplay = this.cps_cur - (this.cps_cur*percDrain/100);
+						var txt = Beautify(cpsToDisplay.toFixed(0)) + " drained by " + Math.round(percDrain) + "%";
+						this.cpsDisplay.text(txt);
 				}
 				
 				// poseidon Minigame
@@ -4694,7 +5015,9 @@ var Game = {
 					this._scarificeCheck();
 				}
 				// end poseidon Minigame
-				
+				if((this.weatherstationLevel>0)&&(this.weatherstationLevel<9)){
+					this._weatherstationCheck();
+				}
 		},
 		
 		_getPerc:function(){
@@ -5149,7 +5472,7 @@ var Game = {
 			}
 		},
 		
-		
+	
 		cps: function() {
 			var self = this;
 			var cps = 0;
@@ -5181,7 +5504,12 @@ var Game = {
 					}
 					if ((upgrade.bought==1)&&(upgrade.sort=="alientech")){
 						if(upgrade.building==building.id){
-							building.curproduction = building.curproduction + (building.curproduction*((Game.buildings[1].quantity/upgrade.pipnum)/100*Game.alientechStrength));
+							building.curproduction = building.curproduction + (building.curproduction*((Game.buildings[upgrade.pip].quantity/upgrade.pipnum)/100*Game.alientechStrength));
+						}
+					}
+					if ((upgrade.bought==1)&&(upgrade.sort=="alientechb")){
+						if(upgrade.building==building.id){
+							building.curproduction = building.curproduction + (building.curproduction*((Game.buildings[upgrade.pip].quantity/upgrade.pipnum)/100*Game.alientechStrength));
 						}
 					}
 					if ((upgrade.bought==1)&&(upgrade.sort=="crazyscientist")){
@@ -5337,11 +5665,15 @@ var Building = function(options) {
 				countplus = ((this.quantity * this.curproduction / 1000 * diff)- ((this.quantity * this.curproduction / 1000*diff)*Game.alienNumber*Game.alienDrainPerc/100))*Game.waterLevel;
 			}
 			countplus = countplus/100*Game.offlineperc;
-			Game.drops_in_bank += countplus;
-			Game.total_drops_produced += countplus;
-			Game.total_ever += countplus; 
-			this.totalproduction += countplus;
-			return countplus;
+			if(countplus>0){
+				Game.drops_in_bank += countplus;
+				Game.total_drops_produced += countplus;
+				Game.total_ever += countplus; 
+				this.totalproduction += countplus;
+				return countplus;
+			}else {
+				return 0;
+			}
 		},
 		
 		produce: function(diff) {
@@ -5351,10 +5683,12 @@ var Building = function(options) {
 			}else{
 				countplus = ((this.quantity * this.curproduction / 1000 * diff)- ((this.quantity * this.curproduction / 1000*diff)*Game.alienNumber*Game.alienDrainPerc/100))*Game.waterLevel;
 			}
-			Game.drops_in_bank += countplus;
-			Game.total_drops_produced += countplus;
-			Game.total_ever += countplus; 
-			this.totalproduction += countplus;
+			if(countplus>0){
+				Game.drops_in_bank += countplus;
+				Game.total_drops_produced += countplus;
+				Game.total_ever += countplus; 
+				this.totalproduction += countplus;
+			}
 		},
 		
 		startstyle: function(){
@@ -5365,14 +5699,17 @@ var Building = function(options) {
 					
 				if (this.cost > Game.drops_in_bank) { 
 					
-						this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
+						this.button.removeClass('buildingactive');
+						this.button.addClass('buildingnonactive');
+						//this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
 						this.active=0;
 						this.style=0;
 					
 				} else {
-					
+						this.button.removeClass('buildingnonactive');
+						this.button.addClass('buildingactive');
 						this.active=1;
-						this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
+						//this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
 						this.style=1;
 					
 				}
@@ -5388,15 +5725,17 @@ var Building = function(options) {
 				if (this.cost > Game.drops_in_bank) { 
 					this.active=0;
 					if (this.style!=0){
-						this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
-						
+						//this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
+						this.button.removeClass('buildingactive');
+						this.button.addClass('buildingnonactive');
 						this.style=0;
 					}
 				} else {
 					this.active=1;
 					if (this.style!=1){
-						
-						this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
+						this.button.removeClass('buildingnonactive');
+						this.button.addClass('buildingactive');
+						//this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
 						this.style=1;
 					}
 				}
@@ -5408,15 +5747,17 @@ var Building = function(options) {
 				if (this.cost > Game.drops_in_bank) {
 					this.active=0;
 					if (this.style!=0){
-						this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
-						
+						//this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
+						this.button.removeClass('buildingactive');
+						this.button.addClass('buildingnonactive');
 						this.style=0;
 					}
 				} else {
 					this.active=1;
 					if (this.style!=1){
-						
-						this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
+						this.button.removeClass('buildingnonactive');
+						this.button.addClass('buildingactive');
+						//this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
 						this.style=1;
 					}
 				}
@@ -5428,16 +5769,18 @@ var Building = function(options) {
 				if (this.cost > Game.drops_in_bank) {
 					this.active=0;
 					if (this.style!=0){
-						this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
-						
+						//this.button.css({'-moz-opacity':'0.5','opacity':'.50','filter':'alpha(opacity=50)','cursor':'initial'});
+						this.button.removeClass('buildingactive');
+						this.button.addClass('buildingnonactive');
 						this.style=0;
 					}
 		
 				} else {
 					this.active=1;
 					if (this.style!=1){
-						
-						this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
+						this.button.removeClass('buildingnonactive');
+						this.button.addClass('buildingactive');
+						//this.button.css({'-moz-opacity':'1','opacity':'1','filter':'alpha(opacity=100)','cursor':'pointer'});
 						this.style=1;
 					}
 				}
@@ -5536,7 +5879,7 @@ var Building = function(options) {
 						this.cost = this.cost*0.95;
 					}
 					if(Game.drops_in_bank>=this.cost){
-						Game.drops_in_bank -= this.cost;
+						Game.drops_in_bank -= this.cost; if(Game.drops_in_bank<0){Game.drops_in_bank=0;}
 						
 						this.quantity++;
 						Game.totalBuildings++;
@@ -5550,7 +5893,7 @@ var Building = function(options) {
 						cost10 = cost10*0.95;
 					}
 					if(Game.drops_in_bank>=cost10){
-						Game.drops_in_bank -= cost10;
+						Game.drops_in_bank -= cost10; if(Game.drops_in_bank<0){Game.drops_in_bank=0;}
 						this.quantity = this.quantity+10;
 						Game.totalBuildings = Game.totalBuildings + 10;
 						this.cost = this.buyBulkCalc(10);
@@ -5565,7 +5908,7 @@ var Building = function(options) {
 						cost100 = cost100*0.95;
 					}
 					if(Game.drops_in_bank>=cost100){
-						Game.drops_in_bank -= cost100;
+						Game.drops_in_bank -= cost100; if(Game.drops_in_bank<0){Game.drops_in_bank=0;}
 						this.quantity = this.quantity+100;
 						Game.totalBuildings = Game.totalBuildings + 100;
 						this.cost = this.buyBulkCalc(100);
@@ -5593,13 +5936,19 @@ var Building = function(options) {
 						this.button = $("<button class='building'><span class='buildingquantity'>"+this.quantity+"</span> <span class='buildingname'>???</span>\n<span class='buildingcost'>"+Beautify(this.cost)+"</span></button></br>").css({'background':'#C5CAE9 url("images/webp/question.webp") no-repeat right center'})
 									.hover(function() {
 										if(self.shown==1){
+											$('#popover').html('<table><tr><td><img src="images/webp/'+self.name+'.webp"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify((self.curproduction).toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>');
 											var posX = tempX;
 											var posY = tempY;
+											var divh = $('#popover').outerHeight();
+											var h = window.innerHeight;
+											if((posY+divh)>h){
+												posY = h-divh;
+											}
 											var popXpos = Game._getPopPos('left');
 											
 											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
 											
-											$('#popover').html('<table><tr><td><img src="images/webp/'+self.name+'.webp"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify((self.curproduction).toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>').css(csspos).show();
+											$('#popover').css(csspos).show();
 										}
 									  }, function() {
 										// on mouseout
@@ -5615,56 +5964,19 @@ var Building = function(options) {
 		
 									.hover(function() {
 										if(self.shown==1){
+											$('#popover').html('<table><tr><td><img src="images/png/'+self.name+'.png"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify(self.curproduction.toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>');
 											var posX = tempX;
 											var posY = tempY;
+											var divh = $('#popover').outerHeight();
+											var h = window.innerHeight;
+											if((posY+divh)>h){
+												posY = h-divh;
+											}
 											var popXpos = Game._getPopPos('left');
 											
 											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
 											
-											$('#popover').html('<table><tr><td><img src="images/png/'+self.name+'.png"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify(self.curproduction.toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>').css(csspos).show();
-										}
-									  }, function() {
-										// on mouseout
-										$('#popover').hide();
-									  })
-									  
-									.click(function() {
-										self.buy();
-									});
-				}
-			}else if (Game.buyBulk == 10){
-				this.cost = this.buyBulkCalc(10);
-				if (Game.hasWebP==1){
-						this.button = $("<button class='building'><span class='buildingquantity'>"+this.quantity+"</span> <span class='buildingname'>???</span>\n<span class='buildingcost'>10x = "+Beautify(this.cost)+"</span></button></br>").css({'background':'#C5CAE9 url("images/webp/question.webp") no-repeat right center'})
-									.hover(function() {
-										if(self.shown==1){
-											var posX = tempX;
-											var posY = tempY;
-											var popXpos = Game._getPopPos('left');
-											
-											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
-											$('#popover').html('<table><tr><td><img src="images/webp/'+self.name+'.webp"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost for 10: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify((self.curproduction).toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>').css(csspos).show();
-										}
-									  }, function() {
-										// on mouseout
-										$('#popover').hide();
-									  })
-									  
-									.click(function() {
-										self.buy();
-									});
-					
-				}else{
-					this.button = $("<button class='building'><span class='buildingquantity'>"+this.quantity+"</span> <span class='buildingname'>???</span>\n<span class='buildingcost'>10x = "+Beautify(this.cost)+"</span></button></br>").css({'background':'#C5CAE9 url("images/png/question.png") no-repeat right center'})
-		
-									.hover(function() {
-										if(self.shown==1){
-											var posX = tempX;
-											var posY = tempY;
-											var popXpos = Game._getPopPos('left');
-											
-											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
-											$('#popover').html('<table><tr><td><img src="images/png/'+self.name+'.png"></td><td><p class="popovertitle">'+self.name+'</p><p>Cost for 10: '+Beautify(self.cost)+' drops</p><p>Each '+self.name+' produces '+ Beautify(self.curproduction.toFixed(2)) +' drops per second.</p><p>'+self.quantity+' '+ self.name +'s producing '+ Beautify((self.quantity*self.curproduction).toFixed(2)) +' drops per second. ('+ ((self.quantity*self.curproduction)/Game.cps_cur*100).toFixed(2) +' % of total production)</p></td></tr></table>').css(csspos).show();
+											$('#popover').css(csspos).show();
 										}
 									  }, function() {
 										// on mouseout
@@ -5790,7 +6102,14 @@ var Upgrade = function(options) {
 					
 				}else if(this.sort=="alientech"){
 					
-					if ((this.required <= Game.buildings[this.building-1].quantity)&&(Game.buildings[1].quantity>=1)){
+					if ((this.required <= Game.buildings[this.building-1].quantity)&&(Game.buildings[this.pip].quantity>=1)){
+						this.button.fadeIn("fast");
+						}
+						this.checkstyle();
+					
+				}else if(this.sort=="alientechb"){
+					
+					if ((this.required <= Game.buildings[this.building-1].quantity)&&(Game.buildings[this.pip].quantity>=1)){
 						this.button.fadeIn("fast");
 						}
 						this.checkstyle();
@@ -5828,14 +6147,18 @@ var Upgrade = function(options) {
 		
 		startstyle: function(){
 			if(this.cost <= Game.drops_in_bank){
-				
+					
+					this.button.removeClass('upgradenonactive');
+					this.button.addClass('upgradeactive');
 					this.active=1;
-					this.button.css({'-moz-opacity':'1.0','opacity':'1.00','filter':'alpha(opacity=100)','cursor':'pointer'});
+					//this.button.css({'-moz-opacity':'1.0','opacity':'1.00','filter':'alpha(opacity=100)','cursor':'pointer'});
 					this.style=1;
+					
 				
 			} else{
-				
-					this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
+					this.button.removeClass('upgradeactive');
+					this.button.addClass('upgradenonactive');
+					//this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
 					this.active=0; 
 					this.style=0;
 				
@@ -5845,13 +6168,17 @@ var Upgrade = function(options) {
 		checkstyle: function(){
 			if(this.cost <= Game.drops_in_bank){
 				if(this.style!=1){ 
+					this.button.removeClass('upgradenonactive');
+					this.button.addClass('upgradeactive');
 					this.active=1;
-					this.button.css({'-moz-opacity':'1.0','opacity':'1.00','filter':'alpha(opacity=100)','cursor':'pointer'});
+					//this.button.css({'-moz-opacity':'1.0','opacity':'1.00','filter':'alpha(opacity=100)','cursor':'pointer'});
 					this.style=1;
 				}	
 			} else{
 				if(this.style!=0){
-					this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
+					this.button.removeClass('upgradeactive');
+					this.button.addClass('upgradenonactive');
+					//this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
 					this.active=0; 
 					this.style=0;
 				}
@@ -5863,7 +6190,7 @@ var Upgrade = function(options) {
 			if((this.active==1)&&(this.bought==0)&&(Game.drops_in_bank>=this.cost)){
 				this.active=0;
 				Game.totalupgrades++;
-				Game.drops_in_bank -= this.cost;
+				Game.drops_in_bank -= this.cost; if(Game.drops_in_bank<0){Game.drops_in_bank=0;}
 				this.bought=1;
 				this.button.fadeOut("fast");
 				this.buttonBought.fadeIn("fast");
@@ -5927,30 +6254,36 @@ var Upgrade = function(options) {
 			this.startcost = this.cost;
 			
 			if (this.sort=="ocean"){
-				this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' ><div style='font-size:1em; color:#221947;'>"+ this.filename+"</div></button>").css({'background-image':'url(images/oceanbg.png)'})
+				this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' >"+ this.filename+"</button>").css({'background-image':'url(images/oceanbg.png)'})
 										.hover(function() {
-											if (self.active==1){
-												self.button.html("<div style='font-size:1.1em; color:#221947;'>"+ self.filename +"</div>");
-											}
+											/*if (self.active==1){
+												self.button.html(self.filename);
+											}*/
 											var posX = tempX;
+											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:url(\'images/oceanbg.png\');  "><table style="width:100%; height:100%;":><tr><td class="popoverperc">'+self.filename+'</td></tr></table></div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>');
 											var posY = tempY;
+											var divh = $('#popover').outerHeight();
+											var h = window.innerHeight;
+											if((posY+divh)>h){
+												posY = h-divh;
+											}
 											var popXpos = Game._getPopPos('left');
 											
 											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
-											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:url(\'images/oceanbg.png\');  "><table style="width:100%; height:100%;":><tr><td class="popoverperc">'+self.filename+'</td></tr></table></div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css(csspos).show();
+											$('#popover').css(csspos).show();
 										}, function(){
-											self.button.html("<div style='font-size:1em;  color:#221947;'>"+ self.filename +"</div>");
+											//self.button.html(self.filename);
 											$('#popover').hide();
 										}).click(function() {
 											
 											self.buy();
 										});
 				
-				this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' style='background-image:url(\'images/oceanbg.png\');'><div style='font-size:1em;  color:#221947;'>"+ this.filename+"</div></button>").css({'background-image':'url(images/oceanbg.png)'})
+				this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' style='background-image:url(\'images/oceanbg.png\');'><div style='font-size:1em;  color:#221947;'>"+ this.filename+"</div></button>").css({'background-image':'url(images/oceanbg.png)'})
 										.hover(function() {
 											var posX = tempX;
 											var posY = tempY;
-											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:url(\'images/oceanbg.png\'); "><table style="width:100%; height:100%;":><tr><td class="popoverperc">'+self.filename+'</td></tr></table></div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
+											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:url(\'images/oceanbg.png\'); "><table style="width:100%; height:100%;":><tr><td class="popoverperc">'+self.filename+'</td></tr></table></div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
 										}, function(){
 											self.button.html("<div style='font-size:1em; color:#221947;'>"+ self.filename +"</div>");
 											$('#popover').hide();
@@ -5960,17 +6293,24 @@ var Upgrade = function(options) {
 					var pos = this.cx + "px " + this.cy + "px";
 					var pos2 = (this.cx+2) + "px " + (this.cy-2) + "px";
 					var filen = 'url(images/webp/' + this.filename + '.webp)';
-					this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' ><div style='font-size:1em;'>&nbsp;</div></button>").css({'background-image':filen, 'background-position':pos })
+					this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' ><div style='font-size:1em;'>&nbsp;</div></button>").css({'background-image':filen, 'background-position':pos })
 										.hover(function() {
 											if (self.active==1){
 												self.button.css({'background-position':pos2});
 											}
 											var posX = tempX;
+											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>');
+											
 											var posY = tempY;
+											var divh = $('#popover').outerHeight();
+											var h = window.innerHeight;
+											if((posY+divh)>h){
+												posY = h-divh;
+											}
 											var popXpos = Game._getPopPos('left');
 											
 											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
-											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css(csspos).show();
+											$('#popover').css(csspos).show();
 										  }, function() {
 											// on mouseout
 											self.button.css({'background-position':pos});
@@ -5981,12 +6321,12 @@ var Upgrade = function(options) {
 											self.buy();
 										});
 								
-						this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' ><div style='font-size:1em;'>&nbsp;</div></button").css({'background-image':filen, 'background-position':pos })
+						this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' ><div style='font-size:1em;'>&nbsp;</div></button").css({'background-image':filen, 'background-position':pos })
 										.hover(function() {
 											
 											var posX = tempX;
 											var posY = tempY;
-											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
+											$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
 										  }, function() {
 											// on mouseout
 											$('#popover').hide();
@@ -5997,18 +6337,25 @@ var Upgrade = function(options) {
 					var pos = this.cx + "px " + this.cy + "px";	
 					var pos2 = (this.cx+2) + "px " + (this.cy-2) + "px";
 					var filen = 'url(images/png/' + this.filename + '.png)';
-					this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' >&nbsp;</button>").css({'background-image':filen, 'background-position':pos })
+					this.button = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' >&nbsp;</button>").css({'background-image':filen, 'background-position':pos })
 									.hover(function() {
 										if (self.active==1){
 											self.button.css({'background-position':pos2});
 										}
 										var posX = tempX;
+										$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>');
+										
 										var posY = tempY;
+										var divh = $('#popover').outerHeight();
+											var h = window.innerHeight;
+											if((posY+divh)>h){
+												posY = h-divh;
+											}
 										var popXpos = Game._getPopPos('left');
 											
 											var csspos = {'top':posY, 'left':popXpos[1], 'right':popXpos[0]};
 										
-										$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css(csspos).show();
+										$('#popover').css(csspos).show();
 									  }, function() {
 										// on mouseout
 										self.button.css({'background-position':pos});
@@ -6019,12 +6366,12 @@ var Upgrade = function(options) {
 										self.buy();
 									});
 							
-					this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(this.cost) + "' >&nbsp;</button>").css({'background-image':filen, 'background-position':pos })
+					this.buttonBought = $("<button class='upgrade' id='" + this.name + "' title='" + this.name + " \n " + Beautify(Math.floor(this.cost)) + "' >&nbsp;</button>").css({'background-image':filen, 'background-position':pos })
 									.hover(function() {
 										
 										var posX = tempX;
 										var posY = tempY;
-										$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' drops</p><p>'+self.description+'</p></td></tr></table>').css({ 'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
+										$('#popover').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' drops</p><p>'+self.description+'</p></td></tr></table>').css({ 'top':posY-100, 'left':posX-460, 'right':'auto'}).show();
 									  }, function() {
 										// on mouseout
 										$('#popover').hide();
@@ -6032,7 +6379,7 @@ var Upgrade = function(options) {
 				}
 			}
 			
-			this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
+			//this.button.css({'-moz-opacity':'0.7','opacity':'.70','filter':'alpha(opacity=70)','cursor':'initial'});
 			this.active=0;
 			this.button.hide();
 			
@@ -6295,11 +6642,12 @@ var Alien = function(options) {
 					this.moving=0;
 					if (this.active==1){
 						Game.alienNumber--;
-						
-						Game.drops_in_bank += this.dropsDrained;
-						Game.total_drops_produced += this.dropsDrained;
-						Game.total_ever += this.dropsDrained; 
-						Game._makeNotice("alienSmall", "Alien popped", "You got " + Beautify(this.dropsDrained) + " back from the alien.",0,0,0);
+						if (this.dropsDrained>0){
+							Game.drops_in_bank += this.dropsDrained; if(Game.drops_in_bank<0){Game.drops_in_bank=0;}
+							Game.total_drops_produced += this.dropsDrained;
+							Game.total_ever += this.dropsDrained; 
+							Game._makeNotice("alienSmall", "Alien popped", "You got " + Beautify(Math.floor(this.dropsDrained)) + " back from the alien.",0,0,0);
+						}
 						this.dropsDrained = 0;
 					}
 					this.active = 0;
@@ -6328,14 +6676,14 @@ var Alien = function(options) {
 									
 									self.click();
 								}).hover(function() {
-									$('#popovera').html(Beautify(self.dropsDrained)+' drops');
+									$('#popovera').html(Beautify(Math.floor(self.dropsDrained))+' drops');
 									var w = $('#popovera').width();
 									var posX = tempX-(w/2);
 									var posY = tempY-30;
 								
 									$('#popovera').css({'display':'block', 'top':posY, 'left':posX});
 									 this.timer = window.setInterval(function() {
-										$('#popovera').html(Beautify(self.dropsDrained)+' drops');
+										$('#popovera').html(Beautify(Math.floor(self.dropsDrained))+' drops');
 									}, 250);
 								
 								}, function() {
@@ -6518,6 +6866,9 @@ var KnowhowUpgrade = function(options) {
 						Game.offlineperc = 95;
 						Game.offlinetime = 604800000;
 					}
+				}else if(this.sort=="weatherstation"){
+					Game.weatherstationImage.show();
+					Game.weatherstationLevel = 1;
 				}
 				this.bought = 1;
 				
@@ -6545,7 +6896,7 @@ var KnowhowUpgrade = function(options) {
 											posX -=480;
 										}
 										
-										$('#popoverk').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' experience points</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY, 'left':posX}).show();
+										$('#popoverk').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' experience points</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY, 'left':posX}).show();
 										
 									}
 								  }, function() {
@@ -6571,7 +6922,7 @@ var KnowhowUpgrade = function(options) {
 										} else {
 											posX -=480;
 										}
-										$('#popoverk').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(self.cost)+' experience points</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY, 'left':posX}).show();
+										$('#popoverk').html('<table><tr><td><div style="border:2px solid white; border-radius:4px; width:60px; height:60px; background-image:'+filen+'; background-position:'+pos+'">&nbsp;</div></td><td><p class="popovertitle">'+self.name+'</p><p>Cost: '+Beautify(Math.floor(self.cost))+' experience points</p><p>'+self.description+'</p></td></tr></table>').css({'top':posY, 'left':posX}).show();
 										
 									}
 								  }, function() {
@@ -6621,13 +6972,14 @@ var Prayer = function(options) {
 		},
 		
 		select: function(){
-			
-			$.each(Game.prayers, function(i, prayer) {
-						prayer.selected = 0;
-					});
-			this.selected = 1;
-			Game._prayerSelected(this.id);
-			Game.cps();
+			if(this.selected!=1){
+				$.each(Game.prayers, function(i, prayer) {
+							prayer.selected = 0;
+						});
+				this.selected = 1;
+				Game._prayerSelected(this.id);
+				Game.cps();
+			}
 		},
 		
 		init: function() {
@@ -6975,18 +7327,18 @@ var _upgrades = [
 	{id:271, sort: "ocean", name: "98th milestone reached", filename: "98", cost: 1000000000000000000000, required: 98, effecton: 0, effect: 0, multiplier: 0, perc: 2,  other: 0, description:"Extra drop production: 2%"},
 	{id:272, sort: "ocean", name: "99th milestone reached", filename: "99", cost: 1000000000000000000000, required: 99, effecton: 0, effect: 0, multiplier: 0, perc: 2,  other: 0, description:"Extra drop production: 2%"},
 	
-	{id:273, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for each pipette you have, each air dryer gains 1% extra of its drops per second.", building: 3, pipnum: 1},
-	{id:274, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 2 pipettes you have, each bucket gains 1% extra of its drops per second.", building: 4, pipnum: 2},
-	{id:275, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 3 pipettes you have, each raindance gains 1% extra of its drops per second.", building: 5, pipnum: 3},
-	{id:276, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 4 pipettes you have, each faucet gains 1% extra of its drops per second.", building: 6, pipnum: 4},
-	{id:277, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 5 pipettes you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 5},
-	{id:278, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 6 pipettes you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 6},
-	{id:279, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 7 pipettes you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 7},
-	{id:280, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 8 pipettes you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 8},
-	{id:281, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 9 pipettes you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 9},
-	{id:282, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 10 pipettes you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 10},
-	{id:283, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 11 pipettes you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 11},
-	{id:284, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 12 pipettes you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 12},
+	{id:273, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for each pipette you have, each air dryer gains 1% extra of its drops per second.", building: 3, pipnum: 1, pip:1},
+	{id:274, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 2 pipettes you have, each bucket gains 1% extra of its drops per second.", building: 4, pipnum: 2, pip:1},
+	{id:275, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 3 pipettes you have, each raindance gains 1% extra of its drops per second.", building: 5, pipnum: 3, pip:1},
+	{id:276, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 4 pipettes you have, each faucet gains 1% extra of its drops per second.", building: 6, pipnum: 4, pip:1},
+	{id:277, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 5 pipettes you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 5, pip:1},
+	{id:278, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 6 pipettes you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 6, pip:1},
+	{id:279, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 7 pipettes you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 7, pip:1},
+	{id:280, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 8 pipettes you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 8, pip:1},
+	{id:281, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 9 pipettes you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 9, pip:1},
+	{id:282, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 60000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 10 pipettes you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 10, pip:1},
+	{id:283, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 600000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 11 pipettes you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 11, pip:1},
+	{id:284, sort: "alientech", name: "Alien tech", filename: "upgrades", cx:-480 , cy:-600, cost: 6000000000000000, required: 20, effecton: "Pipette", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Pipettes are twice as efficient and for every 12 pipettes you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 12, pip:1},
 	
 	{id:285, sort: "contact", name: "First contact", filename: "upgrades", cx:-480 , cy:-660, cost: 60000000000000000, required: 10, effecton: "Pipette", effect: 1, multiplier: 2, perc: 0,  other: 0, description:"Amazing! We got in touch with the aliens!<br/>And because they are close the alien technology works better.<br/>Pipettes are twice as efficient."},
 	{id:286, sort: "contactb", name: "Friendly aliens", filename: "upgrades", cx:-480 , cy:-660, cost: 60000000000, required: 0, effecton: "Pipette", effect: 1, multiplier: 2, perc: 0,  other: 0, description:"The aliens seem friendly! The alien technology works better.<br/>Pipettes are twice as efficient."},
@@ -7059,9 +7411,77 @@ var _upgrades = [
 	{id:343, sort: "collaboration", name: "Collaboration", filename: "upgrades", cx:-480 , cy:-840, cost: 2500000000000000000, required: 50, effecton: 0, effect: 0, multiplier: 0, perc: 0,  other: 21, description: "Helpers are collaborating. Trucks gain +5% per colledir, and colliders gain +0.1% per truck.", building: 8, pipnum: 14},
 	{id:344, sort: "collaboration", name: "Collaboration", filename: "upgrades", cx:-480 , cy:-840, cost: 50000000000000000000, required: 70, effecton: 0, effect: 0, multiplier: 0, perc: 0,  other: 21, description: "Helpers are collaborating. Helping hands gain +5% per collider, and colliders gain +0.1% per helping hand.", building: 1, pipnum: 14},
 	
-	{id:345, sort: "poseidon", name: "poseidon", filename: "poseidonsmall", cx:0 , cy:0, cost: 10000000, required: 22, effecton: 0, effect: 0, multiplier: 0, perc: 0,  other: 0, description: "Worship poseidon, God of the seas.", building: 0, pipnum: 0}
+	{id:345, sort: "poseidon", name: "poseidon", filename: "poseidonsmall", cx:0 , cy:0, cost: 10000000, required: 22, effecton: 0, effect: 0, multiplier: 0, perc: 0,  other: 0, description: "Worship poseidon, God of the seas.", building: 0, pipnum: 0},
 
 	
+	{id:346, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 700000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 20 air dryers you have, each bucket gains 1% extra of its drops per second.", building: 4, pipnum: 20, pip:2},
+	{id:347, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 7000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 30 air dryers you have, each raindance gains 1% extra of its drops per second.", building: 5, pipnum: 30, pip:2},
+	{id:348, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 70000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 40 air dryers you have, each faucet gains 1% extra of its drops per second.", building: 6, pipnum: 40, pip:2},
+	{id:349, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 700000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 50 air dryers you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 50, pip:2},
+	{id:350, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 7000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 60 air dryers you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 60, pip:2},
+	{id:351, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 70000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 70 air dryers you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:2},
+	{id:352, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 700000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 80 air dryers you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:2},
+	{id:353, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 7000000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 90 air dryers you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:2},
+	{id:354, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 70000000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 100 air dryers you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:2},
+	{id:355, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 700000000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 110 air dryers you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:2},
+	{id:356, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:0 , cy:-1440, cost: 7000000000000000, required: 25, effecton: "Air dryer", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Air dryers are twice as efficient and for every 120 air dryers you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:2},
+
+	{id:357, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 8000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 30 buckets you have, each raindance gains 1% extra of its drops per second.", building: 5, pipnum: 30, pip:3},
+	{id:358, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 80000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 40 buckets you have, each faucet gains 1% extra of its drops per second.", building: 6, pipnum: 40, pip:3},
+	{id:359, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 800000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 50 buckets you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 50, pip:3},
+	{id:360, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 8000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 60 buckets you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 60, pip:3},
+	{id:361, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 80000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 70 buckets you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:3},
+	{id:362, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 800000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 80 buckets you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:3},
+	{id:363, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 8000000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 90 buckets you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:3},
+	{id:364, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 80000000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 100 buckets you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:3},
+	{id:365, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 800000000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 110 buckets you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:3},
+	{id:366, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-60 , cy:-1440, cost: 8000000000000000, required: 30, effecton: "Bucket", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Buckets are twice as efficient and for every 120 buckets you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:3},
+
+	{id:367, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 90000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 40 raindances you have, each faucet gains 1% extra of its drops per second.", building: 6, pipnum: 40, pip:4},
+	{id:368, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 900000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 50 raindances you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 50, pip:4},
+	{id:369, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 9000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 60 raindances you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 60, pip:4},
+	{id:370, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 90000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 70 raindances you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:4},
+	{id:371, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 900000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 80 raindances you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:4},
+	{id:372, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 9000000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 90 raindances you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:4},
+	{id:373, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 90000000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 100 raindances you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:4},
+	{id:374, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 900000000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 110 raindances you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:4},
+	{id:375, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-120 , cy:-1440, cost: 9000000000000000, required: 35, effecton: "Raindance", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Raindances are twice as efficient and for every 120 raindances you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:4},
+	
+	{id:376, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 1000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 50 faucets you have, each garden hose gains 1% extra of its drops per second.", building: 7, pipnum: 50, pip:5},
+	{id:377, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 10000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 60 faucets you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 60, pip:5},
+	{id:378, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 100000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 70 faucets you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:5},
+	{id:379, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 1000000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 80 faucets you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:5},
+	{id:380, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 10000000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 90 faucets you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:5},
+	{id:381, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 100000000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 100 faucets you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:5},
+	{id:382, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 1000000000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 110 faucets you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:5},
+	{id:383, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-180 , cy:-1440, cost: 10000000000000000, required: 40, effecton: "Faucet", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Faucets are twice as efficient and for every 120 faucets you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:5},
+
+	{id:384, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 20000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 60 garden hoses you have, each truck gains 1% extra of its drops per second.", building: 8, pipnum: 60, pip:6},
+	{id:385, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 200000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 70 garden hoses you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:6},
+	{id:386, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 2000000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 80 garden hoses you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:6},
+	{id:387, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 20000000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 90 garden hoses you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:6},
+	{id:388, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 200000000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 100 garden hoses you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:6},
+	{id:389, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 2000000000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 110 garden hoses you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:6},
+	{id:390, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-240 , cy:-1440, cost: 20000000000000000, required: 45, effecton: "Garden hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Garden hoses are twice as efficient and for every 120 garden hoses you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:6},
+
+	{id:391, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 300000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 70 trucks you have, each fire hose gains 1% extra of its drops per second.", building: 9, pipnum: 70, pip:7},
+	{id:392, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 3000000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 80 trucks you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:7},
+	{id:393, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 30000000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 90 trucks you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:7},
+	{id:394, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 300000000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 100 trucks you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:7},
+	{id:395, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 3000000000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 110 trucks you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:7},
+	{id:396, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-300 , cy:-1440, cost: 30000000000000000, required: 50, effecton: "Truck", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Trucks are twice as efficient and for every 120 trucks you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:7},
+
+	{id:397, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-360 , cy:-1440, cost: 4000000000000, required: 55, effecton: "Fire hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Fire hoses are twice as efficient and for every 80 fire hoses you have, each ice mine gains 1% extra of its drops per second.", building: 10, pipnum: 80, pip:8},
+	{id:398, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-360 , cy:-1440, cost: 40000000000000, required: 55, effecton: "Fire hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Fire hoses are twice as efficient and for every 90 fire hoses you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:8},
+	{id:399, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-360 , cy:-1440, cost: 400000000000000, required: 55, effecton: "Fire hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Fire hoses are twice as efficient and for every 100 fire hoses you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:8},
+	{id:400, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-360 , cy:-1440, cost: 4000000000000000, required: 55, effecton: "Fire hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Fire hoses are twice as efficient and for every 110 fire hoses you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:8},
+	{id:401, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-360 , cy:-1440, cost: 40000000000000000, required: 55, effecton: "Fire hose", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Fire hoses are twice as efficient and for every 120 fire hoses you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:8},
+
+	{id:402, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-420 , cy:-1440, cost: 50000000000000, required: 60, effecton: "Ice mine", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Ice mines are twice as efficient and for every 90 ice mines you have, each spaceship gains 1% extra of its drops per second.", building: 11, pipnum: 90, pip:9},
+	{id:403, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-420 , cy:-1440, cost: 500000000000000, required: 60, effecton: "Ice mine", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Ice mines are twice as efficient and for every 100 ice mines you have, each wormhole gains 1% extra of its drops per second.", building: 12, pipnum: 100, pip:9},
+	{id:404, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-420 , cy:-1440, cost: 5000000000000000, required: 60, effecton: "Ice mine", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Ice mines are twice as efficient and for every 110 ice mines you have, each river gains 1% extra of its drops per second.", building: 13, pipnum: 110, pip:9},
+	{id:405, sort: "alientechb", name: "Alien tech", filename: "upgrades", cx:-420 , cy:-1440, cost: 50000000000000000, required: 60, effecton: "Ice mine", effect: 1, multiplier: 2, perc: 1,  other: 0, description: "Alien technology found that links helpers.<br/>Ice mines are twice as efficient and for every 120 ice mines you have, each collider gains 1% extra of its drops per second.", building: 14, pipnum: 120, pip:9}
+
 	
 ];
 
@@ -7349,6 +7769,9 @@ var _knowhowupgrades = [
 	{id:38, sort:"offline", name:"Offline progress", filename: "clockduration", cx:-4, cy:-4, cost:1000000, req1:36, req2:0, description:"Offline progress: you now keep making drops and aliens keep draining for 6 days while the game is closed."},
 	{id:39, sort:"offline", name:"Offline progress", filename: "clockperc", cx:-4, cy:-4, cost:1000000, req1:37, req2:0, description:"Offline progress: you now keep making drops at a rate of 85% while the game is closed."},
 	{id:40, sort:"offline", name:"Offline progress", filename: "clockperc", cx:-4, cy:-4, cost:5000000, req1:38, req2:39, description:"Offline progress: you now keep making drops at a rate of 95% of your cps for 7 days while the game is closed."},
+	
+	{id:41, sort:"weatherstation", name:"Weatherstation", filename: "weatherstation", cx:0, cy:0, cost:20, req1:1, req2:0, description:"A weatherstation can help you with clouds."},
+	
 ];
 
 

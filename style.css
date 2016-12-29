@@ -288,12 +288,29 @@ body {
 			background-color: #221947;
 			background-position:0px 0px;
 			background-repeat: no-repeat;
-			color:#bbbbbb;
+			color:#221947;
 			font-weight:bold;
-			font-size:1.5em;
+			font-size:1.7em;
 		}
 
+		.upgrade:hover {
+			
+			background-position:1px -1px;
+		}
 		
+		.upgradeactive{
+			-moz-opacity:1.0;
+			opacity:1.00;
+			filter:alpha(opacity=100);
+			cursor:pointer;
+		}
+		
+		.upgradenonactive{
+			-moz-opacity:0.7;
+			opacity:.70;
+			filter:alpha(opacity=70);
+			cursor:initial;
+		}
 
 		/* buildings */
 			/* Buy buttons */
@@ -394,6 +411,19 @@ body {
 					padding-left:3%;
 				}
 		
+				.buildingactive {
+					-moz-opacity:1;
+					opacity:1;
+					filter:alpha(opacity=100);
+					cursor:pointer;
+				}
+				
+				.buildingnonactive {
+					-moz-opacity:0.5;
+					opacity:.50;
+					filter:alpha(opacity=50);
+					cursor:initial;
+				}
 /* center screen content */
 
 	/* waves background */
@@ -430,6 +460,13 @@ body {
 
 	}
 
+	.cpsred{
+		color:red;
+	}
+	
+	.cpswhite{
+		color:#ffffff;
+	}
 		/* Text in div containing drops in bank and dps */
 
 	/*	#countdiv h1{
@@ -945,6 +982,18 @@ body {
 		z-index:1799;
 	}
 	
+	#weatherstationImage {
+		height:60px;
+		width: 60px;
+		position:absolute;
+		right:80px;
+		bottom:2px;
+		background: transparent url("images/weatherstation.png") no-repeat center center;
+		display:none;
+		cursor:pointer;	
+		z-index:1799;
+	}
+	
 	#poseidonStart{
 		display:none;
 		text-align:left;
@@ -1015,6 +1064,44 @@ body {
 		user-select: none;
 	}
 	
+	#weatherstationDiv {
+		display:none;
+		text-align:left;
+		background-color:#221947;
+		position:absolute;
+		bottom:130px;
+		right:90px;
+		max-width:70%;
+		border-width:4px;	
+		border-style:ridge;
+		border-color:#b2a9d7;
+		height:250px;
+		width:70%;
+		border-radius: 8px;
+		color: #bbbbbb;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+		z-index:10000;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+	}
+	
+	#weatherstationDiv p{
+		padding:0.2em 0.5em;
+		margin-left:0;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+	}
+	
 	#poseidonSacrifice p{
 		padding:0.2em 0.5em;
 		margin-left:0;
@@ -1051,6 +1138,27 @@ body {
 	}
 	
 	#sacrificeDiv{
+		width:95%; 
+		height:auto; 
+		background-color:#002558; 
+		border-width:3px;	
+		border-style:ridge;
+		border-color:#b2a9d7;
+		border-radius: 8px;
+		margin-right:10px;
+		-moz-box-shadow:    inset 0 0 20px #0090cf;
+		-webkit-box-shadow: inset 0 0 20px #0090cf;
+		box-shadow:         inset 0 0 20px #0090cf;
+		color:#ffffff;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+		cursor:pointer;	
+	}
+	
+	#upgradeWeatherstationDiv{
 		width:95%; 
 		height:auto; 
 		background-color:#002558; 
@@ -2167,7 +2275,7 @@ body {
 	
 	#khupgrade40{position:absolute; top:1183px; left:2251px; } #arrowsdiv40a{height:113px; top:1183px; left:2251px; transform:translate(0,30px) rotate(99deg);} #arrowsdiv40b{height:108px; top:1183px; left:2251px; transform:translate(0,30px) rotate(133deg);}
 	
-	
+	#khupgrade41{position:absolute; top:510px; left:620px; } #arrowsdiv41{height:240px; top:510px; left:620px; transform:translate(0,30px) rotate(-90deg);}
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1600px){
