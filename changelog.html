@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Changelog</title>
 
 		<link rel="shortcut icon" href="favicon.ico" />
@@ -56,11 +57,78 @@
 				<h1>Changelog</h1>
 				<h2>To do</h2>
 				<ul>
-					<li>Add +10 to buy buildings in temple build minigame</li>
-					<li>Naming the ocean and change the name as it fills up</li>
 					<li>Cloud sound lags for some players</li>
-					<li>Game uses too much cpu.</li>
 					<li>Cross origin request blocked in firefox: need to look in to that</li>
+					<li>Refactor code to make production of drops by helpers less cpu intensive.</li>
+				</ul>
+				<h2>V. 0.2.5 beta</h2>
+				<ul>
+					<li>Upgrades that you can't afford are in grayscale from now on.</li>
+					<li>Clicking on the buildings does not make the mouseover text disappear anymore.</li>
+				</ul>
+				<h2>V. 0.2.4 beta</h2>
+				<ul>
+					<li>Made button to buy all upgrades you can afford.</li>
+				</ul>
+				<h2>V. 0.2.3 beta</h2>
+				<ul>
+					<li>Offline production fixed. Calculation was correct but didn't add to drops in bank.</li>
+				</ul>
+				<h2>V. 0.2.2 beta</h2>
+				<ul>
+					<li>Made specials 10 times and 100 times better for the helpers you have 150 and 200 from.</li>
+				</ul>
+				<h2>V. 0.2.1 beta</h2>
+				<ul>
+					<li>Fixed offline production and clarified notice about offline production.</li>
+				</ul>
+				<h2>V. 0.2 beta</h2>
+				<ul>
+					<li>Refactored parts of code to make game more performant. (I hope there are no new bugs introduced this way, I tested as much as I could)</li>
+					<li>Fixed problem with clouds appearing and immediatly disappearing, and clouds appearing when they shouldn't.</li>
+					<li>Fixed problem with bad weater and made sure time for new cloud to appear gets cut in half.</li>
+				</ul>
+				<h2>V. 0.1.19 beta</h2>
+				<ul>
+					<li>Using know how now saves the game so you don't fall back on the last autosave if you use the back button.</li>
+					<li>Tried to balance specials better.</li>
+				</ul>
+				<h2>V. 0.1.19 beta</h2>
+				<ul>
+					<li>Added extra specials for cloudclicks for each helper for which there is a quantity of at least 100.</li>
+					<li>Added three extra upgrades for each helper and three extra upgrades for clicking.</li>
+				</ul>
+				<h2>V. 0.1.18 beta</h2>
+				<ul>
+					<li>Fixed the Prayer button text and functionality.</li>
+					<li>Changed the text on the sacrifice button to reflect the updated prayers.</li>
+					<li>Added an extra prayer button in the sacrifice window with current prayer in text.</li>
+					<li>Made the prayer image button change background color and border color when hovered.</li>
+				</ul>
+				<h2>V. 0.1.17 beta</h2>
+				<ul>
+					<li>Made boost from number of drops in bank visible.</li>
+					<li>Made the cursor a pointer over prayer-button.</li>
+					<li>Made Bad Weather, Heavy Rain and Enormous bonus prayers more powerfull.</li>
+					<li>Fixed bug with zoom in Know-How Tree.</li>
+					<li>Fixed Crazy scientists boost percentage in Mtn Eew popup.</li>
+				</ul>
+				<h2>V. 0.1.16 beta</h2>
+				<ul>
+					<li>Fixed the images in the popups from the Know-How Tree.</li>
+					<li>The weather station, the temple and Poseidon(if he isn't jumping around) upscale when hovered.</li>
+					<li>Added a visual cue to the weather station so you can immediatly see wether it is enabled or not.</li>
+					<li>Added a zoom control for the Know-How Tree.</li>
+					<li>Arrows of the Know-How Tree are more clear.</li>
+					<li>added a back-button for the Know-How Tree.</li>
+				</ul>
+				<h2>V. 0.1.15 beta</h2>
+				<ul>
+					<li>Added sound option for Clickstorm and Poseidon Wrath</li>
+					<li>It is now possible to disable and enable the weather station.</li>
+					<li>The duration of a Turbo is now doubled with the third cloud upgrade.</li>
+					<li>The bug with invisible aliens showing up and draining is fixed.</li>
+					<li>All know how perks are visible from the start.</li>
 				</ul>
 				<h2>V. 0.1.14 beta</h2>
 				<ul>
@@ -108,14 +176,14 @@
 				<h2>V. 0.1.8 beta</h2>
 				<ul>
 					<li>Fixed overpowered brain prayers. They now give 10%, 20% and 40% more power than they have without prayer. They give 10% * achievement percentage boost without prayer, and the bug added 10%, 20% and 40% making it doubling, tripling and 5 times as much.</li>
-					<li>Discount prayer images are changed to reflec 5% discount.</li>
+					<li>Discount prayer images are changed to reflect 5% discount.</li>
 					<li>Buildings now become active when they should when prayer discount helper is selected</li>
 					<li>Removed "drops" after the number of hand made clicks in statistics.</li>
 					<li>Fixed alien drain bug that returned NaN.</li>
 					<li>Fixed unintentional unlocking of poseidon with know-how prestige.</li>
 					<li>Fixed bug that froze game when not valid save was loaded.</li>
 					<li>Mtn Eew % and Crazy scientists boost is visible in Mtn Eew popup.</li>
-					<li>Fixed bug that allowed autoclicker to sacrifice and get negative alount of helpers.</li>
+					<li>Fixed bug that allowed autoclicker to sacrifice and get negative amount of helpers.</li>
 					<li>Fixed name Large H-O colider so it stays on one line.</li>
 				</ul>
 				<h2>V. 0.1.7 beta</h2>
@@ -142,7 +210,7 @@
 				<h2>V. 0.1.5 beta</h2>
 				<ul>
 					<li>Put "Max cap" instead of number when cost is higher than possible capacity in temple building minigame.</li>
-					<li>Fixed alied drain percentage bugs when kon how perk adds a percentage.</li>
+					<li>Fixed alied drain percentage bugs when know how perk adds a percentage.</li>
 					<li>Fixed Mtn Eew layer that can cover aliens, moved it a bit to the right and improved responsive design.</li>
 					<li>Added background for ocean level milestone upgrades and changed font-color.</li>
 					<li>Fixed tooltip position for prayers.</li>
@@ -193,7 +261,7 @@
 				<p>Belgium</p>
 				<p>KBO nr. 0812.607.206</p>
 				<p>Contact: filltheoceans@gmail.com</p>
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 				<!-- responsive_1_filltheoceans -->
 				<ins class="adsbygoogle"
 					 style="display:block"
