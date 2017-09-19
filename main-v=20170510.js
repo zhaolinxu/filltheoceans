@@ -2,8 +2,8 @@ var msie;
 msie = window.document.documentMode;
 
 if (typeof(msie)=="number"){
-	var htmltxt = "<h1 style='color:#ffffff'>Fill The Oceans</h1><p style='color:#ffffff'>Fill the oceans is a game that uses CSS3 and advanced javascript that is not supported by Internet Explorer.</p>";
-	htmltxt += "<p style='color:#ffffff'>Fill The Oceans should work with all recent major other browsers like: Chrome, Firefox, Opera and Edge</p> <p  style='color:#ffffff'>Sorry for this inconvenience.</p>";
+	var htmltxt = "<h1 style='color:#ffffff'>填满海洋</h1><p style='color:#ffffff'>填写海洋是使用CSS3和JavaScript制作的高级游戏，不支持Internet Explorer浏览器。</p>";
+	htmltxt += "<p style='color:#ffffff'>填充海洋应该与所有最近的其他主要浏览器一起工作，如：Chrome，Firefox，Opera和Edge</p> <p  style='color:#ffffff'>很抱歉给您带来不便。</p>";
 	document.getElementById("body").innerHTML=htmltxt;
 }
 
@@ -421,7 +421,7 @@ var Game = {
 		init: function(_buildings, _upgrades, _achievements) {
 			var self = this;
 			
-			document.title = "Fill The Oceans - v. "+ this.version +" beta";
+			document.title = "填满海洋 - v. "+ this.version +" beta";
 			$('#version2').text(this.version);
 
 			// -- Cache DOM elements

@@ -107,33 +107,33 @@
 		<!-- Poseidon Minigame -->
 		<div id="poseidonMinigame">
 			<div id="poseidonContent">
-				<button id="poseidonBacktogameButton" class="knowhow">Back to game</button>
+				<button id="poseidonBacktogameButton" class="knowhow">回到游戏</button>
 				<p class="popovertitle">Build 1000 Temples</p>
 				<p>To build a temple you need to cut wood and stone, and have builders.</p><p>To feed builders and other workers you need food, and to house them you need tents or houses.</p><p>You can make workers farm, cut wood, cut stone or build.</p>
 				<p>&nbsp;</p>
 				
 				<div class="poseidonMinigameResourceGroupDiv">
 					<div style="display:inline-block;">
-						<div id="foodDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">Food and leather</p>
+						<div id="foodDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">食物和皮革</p>
 							<table>
 								<tr>
 									<td><div id="pFoodImage"></div></td>
-									<td><p>Food: <span id="pFoodTotalStat" class="stattxt">0</span></p><p>Leather: <span id="pLeatherTotalStat" class="stattxt">0</span></p></td>
+									<td><p>食物: <span id="pFoodTotalStat" class="stattxt">0</span></p><p>皮革: <span id="pLeatherTotalStat" class="stattxt">0</span></p></td>
 								</tr>
 								<tr>
-									<td><p>Maximum-capacity: <span id="pFoodBarnCapStat" class="stattxt">0</span></p><p>Upgrade: max. capacity +100</p><p>Cost: <span id="pFoodBarnCostStat" class="stattxt">0</span> wood</p></td>
+									<td><p>最大容量: <span id="pFoodBarnCapStat" class="stattxt">0</span></p><p>升级：最大容量 +100</p><p>花费： <span id="pFoodBarnCostStat" class="stattxt">0</span> 木头</p></td>
 									<td><div id="pFoodBarnImage" class="pBarnImage"></div></td>
 								</tr>
 							</table>
 						</div>
-						<div id="woodDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">Wood</p>
+						<div id="woodDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">木头</p>
 							<table>
 								<tr>
 									<td><div id="pWoodImage"></div></td>
-									<td><p>Wood: <span id="pWoodTotalStat" class="stattxt">0</span></p></td>
+									<td><p>木头: <span id="pWoodTotalStat" class="stattxt">0</span></p></td>
 								</tr>
 								<tr>
-									<td><p>Maximum-capacity: <span id="pWoodBarnCapStat" class="stattxt">0</span></p><p>Upgrade: max. capacity +100</p><p>Cost: <span id="pWoodBarnCostStat" class="stattxt">0</span> wood</p></td>
+									<td><p>最大容量： <span id="pWoodBarnCapStat" class="stattxt">0</span></p><p>升级：最大容量 +100</p><p>花费： <span id="pWoodBarnCostStat" class="stattxt">0</span> 木头</p></td>
 									<td><div id="pWoodBarnImage" class="pBarnImage"></div></td>
 								</tr>
 							</table>
@@ -142,10 +142,10 @@
 							<table>
 								<tr>
 									<td><div id="pStoneImage"></div></td>
-									<td><p>Stone: <span id="pStoneTotalStat" class="stattxt">0</span></p></td>
+									<td><p>石头: <span id="pStoneTotalStat" class="stattxt">0</span></p></td>
 								</tr>
 								<tr>
-									<td><p>Maximum-capacity: <span id="pStoneBarnCapStat" class="stattxt">0</span></p><p>Upgrade: max. capacity +100</p><p>Cost: <span id="pStoneBarnCostWoodStat" class="stattxt">0</span> wood + <span id="pStoneBarnCostStoneStat" class="stattxt">0</span> stone</p></td>
+									<td><p>最大容量： <span id="pStoneBarnCapStat" class="stattxt">0</span></p><p>升级：最大容量 +100</p><p>花费： <span id="pStoneBarnCostWoodStat" class="stattxt">0</span> 木头 + <span id="pStoneBarnCostStoneStat" class="stattxt">0</span> 石头</p></td>
 									<td><div id="pStoneBarnImage" class="pBarnImage"></div></td>
 								</tr>
 							</table>
@@ -155,60 +155,60 @@
 				</div>
 				<div  class="poseidonMinigameResourceGroupDiv">
 					<div style="display:inline-block;">
-						<div id="housingDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">Housing</p>
+						<div id="housingDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">住房</p>
 							<table>
 								<tr>
 									<td valign="top" style="height:92px; width:80px;"><div id="pTentImage"></div></td>
 									<td><p style="text-align:center; min-width:50px;"><span id="pTentStat" class="stattxt">0</span></p></td>
-									<td><p>Tent: 1 person</p><p>Cost: 2 leather + 2 wood</p></td>
+									<td><p>Tent: 1 person</p><p>花费： 2 皮革 + 2 木头</p></td>
 								</tr>
 								<tr>
 									<td valign="top" id="pWoodenhouseTD" style="height:92px; width:80px;"><div id="pWoodenhouseImage"></div></td>
 									<td><p style="text-align:center; min-width:50px;"><span id="pWoodenhouseStat" class="stattxt">0</span></p></td>
-									<td><p>Wooden house: 3 persons</p><p>Cost: 1 leather + 20 wood</p><p>Two builders needed</p></td>
+									<td><p>Wooden house: 3 persons</p><p>花费： 1 皮革 + 20 木头</p><p>需要2个工人</p></td>
 								</tr>
 								<tr>
 									<td valign="top" id="pStonehouseTD" style="height:92px; width:80px;"><div id="pStonehouseImage"></div></td>
 									<td><p style="text-align:center; min-width:50px;"><span id="pStonehouseStat" class="stattxt">0</span></p></td>
-									<td><p>Stone house: 6 persons</p><p>Cost: 1 leather + 10 wood + 30 stone</p><p>Five builders needed</p></td>
+									<td><p>Stone house: 6 persons</p><p>花费： 1 皮革 + 10 wood + 30 stone</p><p>需要5个工人</p></td>
 								</tr>
 							</table>
 						</div>
-						<div id="workersDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">Workers</p>
+						<div id="workersDiv" class="poseidonMinigameResourceDiv"><p class="pResourceTitle">工人</p>
 							<table>
 								<tr>
 									<td><div id="pWorkerImage"></div></td>
 									<td style="width:50px;"><p style="text-align:center;"><span id="pWorkerStat" class="stattxt">0</span></p></td>
-									<td><p>Cost: 20 food</p><p>Needs food to survive</p><p>Maximum number of workers: <span id="pWorkerMaxCapStat" class="stattxt">0</span></p><p style="font-size:0.5em;"></p></td>
+									<td><p>花费： 20 食物</p><p>需要食物才能生存</p><p>最大工人人数: <span id="pWorkerMaxCapStat" class="stattxt">0</span></p><p style="font-size:0.5em;"></p></td>
 								</tr>
 								
 								<tr>
-									<td colspan="3"><p style="text-align:center;">Workers without a job: <span id="pWorkerIdleStat" class="stattxt">0</span></p><p style="font-size:0.5em;"></p></td>
+									<td colspan="3"><p style="text-align:center;">没有工作的工人: <span id="pWorkerIdleStat" class="stattxt">0</span></p><p style="font-size:0.5em;"></p></td>
 								</tr>
 								
 								<tr>
 									<td colspan="3">
 										<table>
 											<tr>
-												<td>Farmers:</td>
+												<td>农民:</td>
 												<td><button id="pFarmerMinButton" class="optionbutton">-</button></td>
 												<td style="height:20px; width:70px; text-align:center;"><span id="pFarmerStat" class="stattxt" >0</span></td>
 												<td><button id="pFarmerPlusButton" class="optionbutton">+</button></td>
 											</tr>
 											<tr>
-												<td>Woodcutters:&nbsp;&nbsp;&nbsp;</td>
+												<td>伐木工:&nbsp;&nbsp;&nbsp;</td>
 												<td><button id="pWoodcutterMinButton" class="optionbutton">-</button></td>
 												<td style="height:20px; width:70px; text-align:center;"><span id="pWoodcutterStat" class="stattxt" >0</span></td>
 												<td><button id="pWoodcutterPlusButton" class="optionbutton">+</button></td>
 											</tr>
 											<tr>
-												<td>Stonecutters:</td>
+												<td>石匠:</td>
 												<td><button id="pStonecutterMinButton" class="optionbutton">-</button></td>
 												<td style="height:20px; width:70px; text-align:center;"><span id="pStonecutterStat" class="stattxt" >0</span></td>
 												<td><button id="pStonecutterPlusButton" class="optionbutton">+</button></td>
 											</tr>
 											<tr>
-												<td>Builders:</td>
+												<td>建设者:</td>
 												<td><button id="pBuilderMinButton" class="optionbutton">-</button></td>
 												<td style="height:20px; width:70px; text-align:center;"><span id="pBuilderStat" class="stattxt" >0</span></td>
 												<td><button id="pBuilderPlusButton" class="optionbutton">+</button></td>
@@ -220,13 +220,13 @@
 								<tr>
 									<td colspan="3">
 										<p style="font-size:0.5em;"></p>
-										<p style="text-align:center;">Builders not working: <span id="pBuildersIdleStat" class="stattxt">0</span></p>
-										<p style="text-align:center;">Builders at work: <span id="pBuildersWorkingStat" class="stattxt">0</span></p>
+										<p style="text-align:center;">空闲工人: <span id="pBuildersIdleStat" class="stattxt">0</span></p>
+										<p style="text-align:center;">忙碌中的工人: <span id="pBuildersWorkingStat" class="stattxt">0</span></p>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="3">
-										<p style="text-align:center;">Workers that died: <span id="pWorkerDieStat" class="stattxt">0</span></p>
+										<p style="text-align:center;">工人死亡数: <span id="pWorkerDieStat" class="stattxt">0</span></p>
 									</td>
 								</tr>
 							</table>
@@ -241,7 +241,7 @@
 							<table>
 								<tr>
 									<td style="text-align:center;"><div id="pTempleImage"></div></td>
-									<td><p>Cost: <span id="pTempleCostWoodStat" class="stattxt">0</span> wood + <span id="pTempleCostStoneStat" class="stattxt">0</span> stone</p><p>Twenty builders needed.</p></td>
+									<td><p>花费： <span id="pTempleCostWoodStat" class="stattxt">0</span> wood + <span id="pTempleCostStoneStat" class="stattxt">0</span> stone</p><p>Twenty builders needed.</p></td>
 								</tr>
 								<tr>
 									<td id="pTempleTimeTD" colspan="2"></td>
@@ -262,8 +262,8 @@
 		<div id="cookiebanner">
 			<table style="width:100%;">
 				<tr>
-					<td>This site uses cookies for ads, traffic analysis and to save the game. <a href="cookiestatement.html" target="_blank">Learn more</a></td>
-					<td><button id="gotit">Got it!</button></td>
+					<td>该网站使用Cookie进行广告，流量分析并保存游戏。<a href="cookiestatement.html" target="_blank">了解更多</a></td>
+					<td><button id="gotit">知道了！</button></td>
 				</tr>
 			</table>
 		</div>
@@ -277,11 +277,11 @@
 				</form><br />
 				<button id="zoombuttonmin" class="optionbutton">-</button>
 			</div>
-			<button id="knowhowbackbutton" class="tabs">Back</button>
+			<button id="knowhowbackbutton" class="tabs">返回</button>
 			<div id="knowhowstats">
-				<div id="knowhowtitle">Know-how</div>
-				<p>Experience points: <span id="knowhowscreen_exp_stats" class="stattxt">0</span></p>
-				<p>Know-how: <span id="knowhowscreen_knowhow_stats" class="stattxt">0</span></p>
+				<div id="knowhowtitle">知识</div>
+				<p>经验值： <span id="knowhowscreen_exp_stats" class="stattxt">0</span></p>
+				<p>知识点： <span id="knowhowscreen_knowhow_stats" class="stattxt">0</span></p>
 			</div>
 			<div id="starsdrag"></div>
 			<div id="superdrag">
@@ -335,7 +335,7 @@
 					<div id="khupgrade41" class="khupgrade"></div><div id="arrowsdiv41" class="arrowsdiv"></div>
 				</div></div>
 			</div>
-			<div id="knowhowbutton"><button id="knowhowstart" class="knowhow">Start with know how</button></div>
+			<div id="knowhowbutton"><button id="knowhowstart" class="knowhow">开始知道如何</button></div>
 		</div>
 		
 		
@@ -497,16 +497,16 @@
 							<div style="text-align:center;"><button id="knowhow_button" class="knowhow">Know-how</button></div>
 						</div>
 						<div class="stats">
-							<p class="title">Statistics</p>
-							<p>Drops in ocean: <span id="drops_in_ocean_stats" class="stattxt">0</span> drops / <span id="percentage_drops_in_ocean_stats" class="stattxt">0</span> %</p>
-							<p>Drops in bank: <span id="drops_in_bank_stats" class="stattxt">0</span> drops</p>
-							<p>Drops produced this know-how level: <span id="total_amount_produced_stats" class="stattxt">0</span> drops</p>
-							<p>Drops produced all know-how levels: <span id="total_ever_stats" class="stattxt">0</span> drops</p>
+							<p class="title">统计</p>
+							<p>海洋中的水滴: <span id="drops_in_ocean_stats" class="stattxt">0</span> 水滴 / <span id="percentage_drops_in_ocean_stats" class="stattxt">0</span> %</p>
+							<p>银行中的水滴: <span id="drops_in_bank_stats" class="stattxt">0</span> 水滴</p>
+							<p>当前知识等级水滴生产数量: <span id="total_amount_produced_stats" class="stattxt">0</span> 水滴</p>
+							<p>Drops produced all know-how levels: <span id="total_ever_stats" class="stattxt">0</span> 水滴</p>
 							<p>Drops per second: <span id="drops_per_second_stats" class="stattxt">0</span>&nbsp;<span id="drainedstats"></span></p>
 							<p>Multiplier: <span id="multiplier_stats" class="stattxt">0</span> %</p>
-							<p>Drops per click: <span id="drops_per_click_stats" class="stattxt">0</span> drops</p>
+							<p>Drops per click: <span id="drops_per_click_stats" class="stattxt">0</span> 水滴</p>
 							<p>Hand-made clicks: <span id="hand-made_clicks_stats" class="stattxt">0</span></p>
-							<p>Hand-made drops: <span id="hand-made_drops_stats" class="stattxt">0</span> drops</p>
+							<p>Hand-made drops: <span id="hand-made_drops_stats" class="stattxt">0</span> 水滴</p>
 							<p>Experience points: <span id="experience_stats" class="stattxt">0</span></p>
 							<p>Drops to next exp point:  <span id="drops_to_next_exp" class="stattxt">0</span></p>
 							<p>Know-how: <span id="knowhow_stats" class="stattxt">0</span></p>
