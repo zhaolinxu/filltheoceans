@@ -30,7 +30,7 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Expires" content="0"/>
 		
-		<title>填满大海 - v. 0 beta</title>
+		<title>填满海洋 - v. 0 beta</title>
 		
 	</head>
 	<body id="body">
@@ -385,7 +385,7 @@
 				<div id="banklevellabel">银行等级</div>
 				<div id="progressbarbankcontainer"><div id="zeropb"></div><div id="fivepb"></div><div id="tenpb"></div><div id="fifteenpb"></div><div id="twentypb"></div><div id="twentyfivepb"></div><div id="thirtypb"></div><div id="thirtyfivepb"></div><div id="fourtypb"></div><div id="fourtyfivepb"></div><div id="fiftypb"></div><div id="fiftyfivepb"></div><div id="sixtypb"></div><div id="sixtyfivepb"></div><div id="seventypb"></div><div id="seventyfivepb"></div><div id="eightypb"></div><div id="eightyfivepb"></div><div id="ninetypb"></div><div id="ninetyfivepb"></div><div id="hundredpb"></div></div>
 				<div id="outerwaves"><div id="innerwaves" class="wavesanimation"></div></div>
-				<div id="countdiv"><p class="titlenumbers" ><span id="drop-count">0</span> 掉落</p><p class="subtitlenumbers" >每秒: <span id="cps">0</span></p><p class="boosttitlenumbers" >银行提振下跌： <span id="bankboost">0</span>%</p></div>
+				<div id="countdiv"><p class="titlenumbers" ><span id="drop-count">0</span> 掉落</p><p class="subtitlenumbers" >每秒: <span id="cps">0</span></p><p class="boosttitlenumbers" >银行水滴掉落加成： <span id="bankboost">0</span>%</p></div>
 				
 				<div id="specialsDiv"><div id="specialsImage"></div><div id="specialsTitle">帮助部落</div><div id="specialsBarOutside"><div id="specialsBar"></div></div></div>
 				
@@ -464,11 +464,11 @@
 						<tr>
 							<td valign="top"><div class="noticeimage" style="border:2px solid white; border-radius:4px; background-image:url('images/png/weatherstation.png'); background-position:center;">&nbsp;</div></td>
 							<td>
-								<p class="popovertitle">Upgrade weatherstation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+								<p class="popovertitle">升级气象站&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 								<table style="width:100%;">
 									<tr style="width:100%;">
-										<td style="width:50%;"><p>Upgrade the weather station</p><p id="weatherstationDivActiveText">The weather station is enabled.</p><p><button class="knowhow" id="weatherstationDivActiveButton">Disable</button></p><p>&nbsp;</p><p><button class="knowhow" id="weatherstationDivCloseButton">Close</button></p></td>
-										<td style="width:50%;"><div id="upgradeWeatherstationDiv" class="hoverSel"><p class="sacrificetext">Upgrade<br />1 trillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">The weather station clicks on 20% of the clouds for you. After you buy this upgrade the weather station will click on 30% of the clouds for you.</p></div></td>
+										<td style="width:50%;"><p>升级气象站</p><p id="weatherstationDivActiveText">气象站已启用.</p><p><button class="knowhow" id="weatherstationDivActiveButton">禁用</button></p><p>&nbsp;</p><p><button class="knowhow" id="weatherstationDivCloseButton">关闭</button></p></td>
+										<td style="width:50%;"><div id="upgradeWeatherstationDiv" class="hoverSel"><p class="sacrificetext">升级<br />1 trillion drops</p><hr style="width:20%" /><p class="sacrificeexpl">气象站点击了20％的云。 购买此升级后，气象站将为您点击30％的云。</p></div></td>
 									</tr>
 								</table>
 							</td>
@@ -476,77 +476,77 @@
 					</table>
 				</div>
 				<div id="prayerSelectDiv">
-					<p class="popovertitle">Select a prayer.<br />&nbsp;</p>
-					<button class="knowhow" id="prayerSelectDivCloseButton">Close</button>
+					<p class="popovertitle">选择一个祈祷。<br />&nbsp;</p>
+					<button class="knowhow" id="prayerSelectDivCloseButton">关闭</button>
 				</div>
 				<div id="notices"></div>
-				<button id="storeopen" class="tabs">Open store</button>
-				<button id="statsopen" class="tabs">Open stats</button>
+				<button id="storeopen" class="tabs">打开商店</button>
+				<button id="statsopen" class="tabs">打开统计</button>
 			</div>
 			
 			<div class="right-container" id="right_container">
 				<div id="pagecontainer">
 					<div id="pagenav">
-						<button class="tabs active" id="tabstats">Stats</button> <button class="tabs" id="taboptions">Options</button>
+						<button class="tabs active" id="tabstats">统计</button> <button class="tabs" id="taboptions">选项</button>
 					</div>
 					<div id="pagestats">
 						<div id="expDiv" class="stats">
-							<p class="title">Experience points</p>
+							<p class="title">经验值</p>
 							<p style="text-align:center;"><span id="experience_num" class="stattxt">0</span></p>
 							<div id="experience_progress"><div id="exp_progress_level">&nbsp;</div></div>
-							<div style="text-align:center;"><button id="knowhow_button" class="knowhow">Know-how</button></div>
+							<div style="text-align:center;"><button id="knowhow_button" class="knowhow">知识</button></div>
 						</div>
 						<div class="stats">
 							<p class="title">统计</p>
 							<p>海洋中的水滴: <span id="drops_in_ocean_stats" class="stattxt">0</span> 水滴 / <span id="percentage_drops_in_ocean_stats" class="stattxt">0</span> %</p>
 							<p>银行中的水滴: <span id="drops_in_bank_stats" class="stattxt">0</span> 水滴</p>
 							<p>当前知识等级水滴生产数量: <span id="total_amount_produced_stats" class="stattxt">0</span> 水滴</p>
-							<p>Drops produced all know-how levels: <span id="total_ever_stats" class="stattxt">0</span> 水滴</p>
-							<p>Drops per second: <span id="drops_per_second_stats" class="stattxt">0</span>&nbsp;<span id="drainedstats"></span></p>
-							<p>Multiplier: <span id="multiplier_stats" class="stattxt">0</span> %</p>
-							<p>Drops per click: <span id="drops_per_click_stats" class="stattxt">0</span> 水滴</p>
-							<p>Hand-made clicks: <span id="hand-made_clicks_stats" class="stattxt">0</span></p>
-							<p>Hand-made drops: <span id="hand-made_drops_stats" class="stattxt">0</span> 水滴</p>
-							<p>Experience points: <span id="experience_stats" class="stattxt">0</span></p>
-							<p>Drops to next exp point:  <span id="drops_to_next_exp" class="stattxt">0</span></p>
-							<p>Know-how: <span id="knowhow_stats" class="stattxt">0</span></p>
-							<p>Cloud clicks: <span id="cloudclicks_stats" class="stattxt">0</span></p>
-							<p>First started: <span id="first_start" class="stattxt">0</span></p>
-							<p>This run started: <span id="run_start" class="stattxt">0</span></p>
-							<p id="contactp">Next meeting with aliens: <span id="contact_stats" class="stattxt">0</span</p>
-							<p id="aliendrainstat">Aliens drained: <span id="aliendrain_stats" class="stattxt">0</span</p>
+							<p>水滴生产的所有知识水平: <span id="total_ever_stats" class="stattxt">0</span> 水滴</p>
+							<p>每秒获得水滴: <span id="drops_per_second_stats" class="stattxt">0</span>&nbsp;<span id="drainedstats"></span></p>
+							<p>倍数: <span id="multiplier_stats" class="stattxt">0</span> %</p>
+							<p>每次点击获得水滴: <span id="drops_per_click_stats" class="stattxt">0</span> 水滴</p>
+							<p>手工点击: <span id="hand-made_clicks_stats" class="stattxt">0</span></p>
+							<p>手工点击获得水滴数量: <span id="hand-made_drops_stats" class="stattxt">0</span> 水滴</p>
+							<p>经验值: <span id="experience_stats" class="stattxt">0</span></p>
+							<p>水滴距离下一个经验点:  <span id="drops_to_next_exp" class="stattxt">0</span></p>
+							<p>知识: <span id="knowhow_stats" class="stattxt">0</span></p>
+							<p>云朵点击数: <span id="cloudclicks_stats" class="stattxt">0</span></p>
+							<p>游戏开始时间: <span id="first_start" class="stattxt">0</span></p>
+							<p>游戏运行时间: <span id="run_start" class="stattxt">0</span></p>
+							<p id="contactp">外星人下次会议: <span id="contact_stats" class="stattxt">0</span</p>
+							<p id="aliendrainstat">外星人排水: <span id="aliendrain_stats" class="stattxt">0</span</p>
 							
-							<p class="title">Upgrades</p>
-							<p>Bought: <span id="bought_upgrades_txt" class="stattxt">0</span> / <span id="total_upgrades" class="stattxt">0</span> (<span id="upgrades_perc" class="stattxt">0</span>%)</p><br/>
+							<p class="title">升级</p>
+							<p>购买: <span id="bought_upgrades_txt" class="stattxt">0</span> / <span id="total_upgrades" class="stattxt">0</span> (<span id="upgrades_perc" class="stattxt">0</span>%)</p><br/>
 							<div id="bought-upgrades"></div>
 
 
-							<p class="title">Achievements</p>
-							<p>Unlocked: <span id="unlocked_achievements" class="stattxt">0</span> / <span id="total_achievements" class="stattxt">0</span> (<span id="achievements_perc" class="stattxt">0</span>)</p><br/>
+							<p class="title">成就</p>
+							<p>解锁: <span id="unlocked_achievements" class="stattxt">0</span> / <span id="total_achievements" class="stattxt">0</span> (<span id="achievements_perc" class="stattxt">0</span>)</p><br/>
 							<div id="achievements-store"></div>
 						</div>
 					</div>
 					<div id="pageoptions">
-						<p class="subtitle">Save / load / reset</p>
-						<button id="save" class="optionbutton">Save</button> Save the game (game saves automatically every minute)</br></br>
-						<button id="export" class="optionbutton">Export save</button> <button id="import" class="optionbutton">Import save</button> Backup your save</br></br>
-						<button id="reset" class="optionbutton">Reset</button> Delete all your progress
+						<p class="subtitle">保存 / 加载 / 重置</p>
+						<button id="save" class="optionbutton">保存</button> 保存游戏（游戏每分钟自动保存）</br></br>
+						<button id="export" class="optionbutton">导出存档</button> <button id="import" class="optionbutton">导入存档</button> 备份存档</br></br>
+						<button id="reset" class="optionbutton">重置</button> 删除所有游戏进度
 						
-						<p class="subtitle">Settings</p>
-						<button id="numberOption" class="optionbutton">Numbers: shortened</button> Number options: shortened / scientific<br /><br />
-						<button id="animatetextOption" class="optionbutton">Show number of drops: yes</button> Show number of drops on click<br /><br />
-						<button id="littledropOption" class="optionbutton">Animate little drops: yes</button><br /><br />
-						<button id="bgdropOption" class="optionbutton">Little background drops: yes</button><br /><br />
-						<button id="spindropOption" class="optionbutton">Spinning background big drop: yes</button><br /><br />
+						<p class="subtitle">设置</p>
+						<button id="numberOption" class="optionbutton">数字：缩短</button> 数字选项：缩短/科学<br /><br />
+						<button id="animatetextOption" class="optionbutton">显示水滴数量: 是</button> 点击时显示获得的水滴数量<br /><br />
+						<button id="littledropOption" class="optionbutton">显示水滴动画: 是</button><br /><br />
+						<button id="bgdropOption" class="optionbutton">背景显示小水滴: 是</button><br /><br />
+						<button id="spindropOption" class="optionbutton">旋转大水滴背景: 是</button><br /><br />
 						
 						<form id="volumeform">
 							 <fieldset>
-								<legend>Volume</legend>
+								<legend>音量</legend>
 								<input type="range" id="volume" name="volume" min="0" max="100"> <span id="volumepercent" class="stattxt" style="float:right;">0</label>%
 							</fieldset>
 						</form><br />
-						<button id="cloudSoundOption" class="optionbutton">云声: 关闭</button> Makes a sound when a cloud appears.<br /><br />
-						<button id="clickSoundOption" class="optionbutton">Clickstorm and Wrath sound: off</button> Makes a sound when a clickstorm or Wrath starts.<br /><br />
+						<button id="cloudSoundOption" class="optionbutton">云声: 关闭</button> 当云出现时发出声音.<br /><br />
+						<button id="clickSoundOption" class="optionbutton">点击风暴和愤怒声: 关闭</button> 当点击风暴或愤怒开始时发出声音。<br /><br />
 					</div>
 				</div>
 				<button id="statsclose" class="tabs">关闭统计</button>
